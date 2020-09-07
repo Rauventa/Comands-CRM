@@ -1,0 +1,243 @@
+@import 'variables/variables';
+@import 'root/bootstrap';
+
+.App {
+  .Layout {
+    min-height: 100vh;
+    width: 100%;
+    background-color: $bgLight;
+
+    .main-info {
+      padding: 1.5rem 2rem;
+      background-color: $white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      border-radius: 5px;
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+
+      .tag-span {
+        color: #8D4C00;
+        margin-left: 0.5rem;
+      }
+
+      .success-span {
+        color: $bgSuccess;
+      }
+
+      h2 {
+        margin-bottom: 0.5rem;
+      }
+
+      &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+          padding: 0 2rem;
+
+          &:first-child {
+            padding-left: 0;
+          }
+
+          &:last-child {
+            padding-right: 0;
+          }
+
+          &:not(:last-child) {
+            border-right: 1px solid $textColor;
+          }
+        }
+      }
+    }
+
+    &__nav {
+      min-height: 5vh;
+
+      &_buttons {
+        display: flex;
+        align-content: center;
+
+        // todo - перенести цвет span в root файл
+
+        span {
+          color: $white;
+        }
+      }
+
+      header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        flex-grow: 1;
+        padding: 0 1rem !important;
+      }
+
+      h3 {
+        color: $white;
+      }
+    }
+
+    &__content {
+      min-height: 90vh;
+
+      .Home, .Teams, .Team, .History, .Add, .Page404 {
+        &__container {
+          padding: 2rem;
+
+          &_info {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+
+            &-buttons {
+              padding: 1.5rem 2rem;
+              background-color: $white;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+              border-radius: 5px;
+              width: fit-content;
+              margin-bottom: 1rem;
+
+              button, a {
+                &:last-child {
+                  margin-left: 1rem !important;
+                }
+              }
+            }
+          }
+
+          &_search {
+            margin-bottom: 2rem;
+
+            button, a {
+              margin-left: 2rem !important;
+            }
+          }
+        }
+      }
+
+      .Home {
+
+        p {
+          margin: 0.5rem 0;
+        }
+
+        span {
+          color: $white;
+        }
+
+        button, a {
+          margin-right: 1rem;
+          margin-top: 0.5rem;
+        }
+      }
+
+      //Teams pages ---
+
+      .Teams {
+
+        .MuiTableRow-root {
+
+          &:hover {
+            background-color: #eeeeee !important;
+            cursor: pointer;
+          }
+        }
+
+        .table-row-content {
+          display: flex;
+          align-content: center;
+
+          svg {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+
+      .Team {
+
+        &__info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          &_heading {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .MuiChip-root {
+              margin: 0 0 0 1rem !important;
+            }
+          }
+
+          .card {
+            padding: 1rem;
+            background-color: $white;
+            border-radius: 0.25rem;
+          }
+        }
+
+        .table-row-content {
+          display: flex;
+          align-content: center;
+
+          svg {
+            margin-right: 0.5rem;
+          }
+
+          .owner-icon {
+            margin-left: 0.5rem;
+            color: #f9a825;
+          }
+        }
+      }
+
+      .Team, .Teams {
+        .main-info {
+          h2 {
+            margin-bottom: 1rem;
+          }
+        }
+      }
+
+      //Auth pages ---
+
+      .Login {
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        &__heading {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+
+        &__form {
+          form {
+            margin-bottom: 2rem;
+
+            .MuiTextField-root {
+              margin: 0 1rem;
+            }
+          }
+        }
+
+        &__buttons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

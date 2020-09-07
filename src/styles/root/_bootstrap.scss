@@ -1,0 +1,175 @@
+* {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: all .3s;
+}
+
+// Text styles ---
+
+h1,h2,h3,h4,h5,h6,p,a,span,small,ul,ol,li,tr,td,b,i {
+  color: $textColor;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+
+  span {
+    color: $white;
+  }
+
+  .homeIcon {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+}
+
+p {
+  line-height: 25px;
+  margin-bottom: 0 !important;
+}
+
+.top-heading {
+  width: 100%;
+  background-color: $white;
+  padding: 2rem;
+}
+
+.loading {
+  min-height: 93vh;
+  width: 100%;
+  display: flex;
+  background-color: $white;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 10000;
+}
+
+svg {
+  cursor: pointer;
+}
+
+b {
+  font-weight: 600;
+}
+
+.delete-icon {
+  color: $bgDanger;
+}
+
+.edit-icon {
+  color: $bgPrimary;
+}
+
+.more-icon {
+  color: $bgDark;
+}
+
+.ant-message {
+  z-index: 100000000;
+}
+
+// Buttons styles ---
+
+button {
+  margin: 0.5rem 0 !important;
+}
+
+// Color styles ---
+
+button, .primary-status, .success-status, .warning-status, .new-status, .danger-status {
+  padding: 0.5rem 2rem !important;
+
+  span {
+    color: $white;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
+}
+
+div[role=presentation] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary-modal {
+  min-height: 20vh;
+  min-width: fit-content;
+  background-color: $white;
+  border-radius: 5px;
+  padding: 2rem 2rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:focus {
+    outline: none;
+  }
+
+  &__content {
+    width: 100%;
+    .MuiFormControl-root {
+      margin: 1.5rem 0 1rem 0;
+      &:not(:last-child) {
+        margin-right: 2rem !important;
+      }
+    }
+
+    .MuiOutlinedInput-root {
+      min-width: 300px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+
+    button, a {
+      &:last-child {
+        margin-left: 1rem !important;
+      }
+    }
+  }
+}
+
+.primary-status {
+  background-color: $bgPrimary !important;
+}
+
+.success-status {
+  background-color: $bgSuccess !important;
+}
+
+.warning-status {
+  background-color: $bgWarning !important;
+}
+
+.new-status {
+  background-color: $bgDark !important;
+}
+
+.danger-status {
+  background-color: $bgDanger !important;
+}
+
+.MuiAppBar-colorPrimary {
+  background-color: $bgPrimary !important;
+}
+
+.MuiChip-root {
+  height: 27px !important;
+}
+
+.MuiBreadcrumbs-root {
+  margin-bottom: 2rem !important;
+}
