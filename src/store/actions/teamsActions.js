@@ -110,12 +110,6 @@ export function teamHistory(id) {
             });
 
             dispatch(teamHistorySuccess(historyList));
-
-            // historyList.map((item) => {
-            //     return {
-            //         ...[item.historyInfo.filter(x => (x.operation === "update") && (x.entityName === "TEAM"))]
-            //     }
-            // });
         } catch (e) {
             console.log(e)
         }

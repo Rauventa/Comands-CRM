@@ -19,7 +19,7 @@ import Modal from "@material-ui/core/Modal";
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import {connect} from "react-redux";
-import {getCurrentTeam, renderPersons} from "../../../store/actions/teamsActions";
+import {getCurrentTeam, renderPersons, teamHistory} from "../../../store/actions/teamsActions";
 import MenuItem from "@material-ui/core/MenuItem";
 import axios from 'axios';
 import {message, Spin} from "antd";
@@ -35,10 +35,13 @@ const Team = props => {
     const [currentData, setCurrentData] = useState({});
     const [loading, setLoading] = useState(true);
     const [term, setTerm] = useState('');
+    const [showHistory, setShowHistory] = useState(false);
+    const [historyData, showHistoryData] = useState({});
 
     useEffect(() => {
         props.getCurrentTeam(props.location.state.id);
         props.renderPersons(props.location.state.id);
+        props.teamHistory(props.location.state.id);
         setTimeout(() => {
             setLoading(false)
         }, 500);
@@ -64,13 +67,27 @@ const Team = props => {
         setShowEditTeam(false)
     };
 
+    const setHistoryInfo = (firstName, secondName, id) => {
+        showHistoryData({
+            firstName, secondName, id
+        });
+
+        setShowHistory(true)
+    };
+
+    const closeShowHistory = () => {
+        setShowHistory(false)
+    };
+
     const setDeleteInfo = (firstName, secondName, id) => {
         setCurrentData({
             firstName, secondName, id
         });
 
-        setShowDeletePerson(true)
+        setShowDeletePerson(true);
     };
+
+    console.log(props.historyList)
 
     const searchingFor = term => {
         return function(x) {
@@ -153,6 +170,8 @@ const Team = props => {
             message.error('Ошибка при удалении команды');
         }
     };
+
+    console.log(props.persons)
 
   return (
       <div className={'Team'}>
@@ -257,7 +276,7 @@ const Team = props => {
               {props.teamInfo.name}
               {/*className={data.statusKey}*/}
               <Chip label={props.teamInfo.status} style={{marginLeft: '1rem'}} />
-              {localStorage.permissions ?
+              {(localStorage.permissions) && (localStorage.userId = props.owner.id) ?
                   <EditIcon
                       onClick={openEditTeam}
                       className={'edit-icon'}
@@ -284,8 +303,8 @@ const Team = props => {
                               Тип команды -
                               <span className={'success-span'}> {props.teamInfo.type}</span>
                           </p>
-                          {localStorage.permissions ?
-                              <p onClick={redirectToHistory}>
+                          {(localStorage.permissions) && (localStorage.userId = props.owner.id) ?
+                              <p className={'history-link'} onClick={redirectToHistory}>
                                   История действий
                               </p>
                               :
@@ -293,7 +312,7 @@ const Team = props => {
                           }
                       </div>
                   </div>
-                  {localStorage.permissions ?
+                  {(localStorage.permissions) && (localStorage.userId = props.owner.id) ?
                       <div className="Team__container_info-buttons">
                           <Button className={'primary-status'} variant="contained" onClick={redirectToAdd}>
                               <AddIcon />
@@ -326,7 +345,7 @@ const Team = props => {
                               <TableCell align="left">Компетенция</TableCell>
                               <TableCell align="left">Стек</TableCell>
                               <TableCell align="left">Занятость</TableCell>
-                              {localStorage.permissions ?
+                              {(localStorage.permissions) && (localStorage.userId = props.owner.id) ?
                                   <TableCell align="left">Действия</TableCell> : null
                               }
                           </TableRow>
@@ -382,7 +401,7 @@ const Team = props => {
                                           }
                                       </div>
                                   </TableCell>
-                                  {localStorage.permissions ?
+                                  {(localStorage.permissions) && (localStorage.userId = props.owner.id) ?
                                       <TableCell align="left">
 
                                           <Modal
@@ -407,12 +426,54 @@ const Team = props => {
                                               </div>
                                           </Modal>
 
+                                          <Modal
+                                              open={showHistory}
+                                              onClose={closeShowHistory}
+                                              aria-labelledby="simple-modal-title"
+                                              aria-describedby="simple-modal-description"
+                                              id={'delete-person'}
+                                          >
+                                              <div className={'primary-modal'}>
+
+                                                  <h3>История - {historyData.firstName + ' ' + historyData.secondName}</h3>
+
+                                                  <div className={'primary-modal__content'}>
+                                                      {props.historyList.map((historyItem, index) => {
+                                                          return (
+                                                              <div className={'history-user-card'} key={historyItem+index}>
+                                                                  <div className="history-user-card__content">
+                                                                      {historyItem.historyInfo.map((historyContent, index) => {
+                                                                          return (
+                                                                              <div key={historyContent+index} className={'history-user-card__content-item'}>
+                                                                                  {historyContent.entityId === historyData.id ?
+                                                                                      <div>
+                                                                                          <p>Компонент изменения - <b>{historyContent.entityName}</b></p>
+                                                                                          <p>Поле <b>{historyContent.field}</b> Изменено с <b>{historyContent.oldValue}</b> на <b>{historyContent.newValue}</b></p>
+                                                                                      </div> :
+                                                                                      null
+                                                                                  }
+                                                                              </div>
+                                                                          )
+                                                                      })}
+                                                                  </div>
+                                                              </div>
+                                                          )
+                                                      })}
+                                                  </div>
+
+                                                  <div className={'primary-modal__buttons'}>
+                                                      <Button className={'new-status'} variant="contained" onClick={closeShowHistory}>Назад</Button>
+                                                  </div>
+                                              </div>
+                                          </Modal>
+
                                           <div className="table-row-content table-actions">
                                               <DeleteIcon
                                                   onClick={() => setDeleteInfo(personData.person.personSkill.personInfo.firstName, personData.person.personSkill.personInfo.secondName, personData.person.id)}
                                                   className={'delete-icon'}
                                               />
                                               <HistoryIcon
+                                                  onClick={() => setHistoryInfo(personData.person.personSkill.personInfo.firstName, personData.person.personSkill.personInfo.secondName, personData.person.id)}
                                                   className={'edit-icon'}
                                               />
                                           </div>
@@ -434,7 +495,8 @@ function mapStateToProps(state) {
     return {
         teamInfo: state.teamsReducer.teamInfo,
         owner: state.teamsReducer.owner,
-        persons: state.teamsReducer.persons
+        persons: state.teamsReducer.persons,
+        historyList: state.teamsReducer.historyList
     }
 }
 
@@ -442,6 +504,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getCurrentTeam: id => dispatch(getCurrentTeam(id)),
         renderPersons: id => dispatch(renderPersons(id)),
+        teamHistory: id => dispatch(teamHistory(id))
     }
 }
 

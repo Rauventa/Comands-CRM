@@ -15,6 +15,8 @@ const History = props => {
         }, 500);
     }, []);
 
+    console.log(props.historyList)
+
   return (
       <div className={'History'}>
 

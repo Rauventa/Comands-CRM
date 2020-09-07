@@ -28,11 +28,9 @@ import {message, Spin} from "antd";
      const [filter, setFilter] = useState(true);
 
      useEffect(() => {
-         if (localStorage.permissions) {
-             props.renderTeams();
-         } else {
-             props.renderMyTeams();
-         }
+         props.renderMyTeams();
+         props.renderTeams();
+
          setTimeout(() => {
              setLoading(false)
          }, 500);
@@ -154,18 +152,11 @@ import {message, Spin} from "antd";
                   <div className={'main-info'}>
                       <h2>Основная информация</h2>
                       <div className="main-info__content">
+                          <p>Мои команды - {props.myTeams.length}</p>
                           {localStorage.permissions ?
-                              <p>Мои команды - {props.teams.length}</p> :
-                              <p>Мои команды - {props.myTeams.length}</p>
+                              <p>Всего команд - {props.teams.length}</p> :
+                              null
                           }
-                          {/*{localStorage.permissions ?*/}
-                          {/*    <p>Руковожу - 1</p> :*/}
-                          {/*    null*/}
-                          {/*}*/}
-                          {/*{localStorage.permissions ?*/}
-                          {/*    <p>Всего команд - 54</p> :*/}
-                          {/*    null*/}
-                          {/*}*/}
                       </div>
                   </div>
                   {localStorage.permissions ?
@@ -243,7 +234,7 @@ import {message, Spin} from "antd";
                   </TableContainer> :
                   [
                       filter ?
-                          <TableContainer component={Paper} key={0}>
+                          <TableContainer component={Paper} key={100}>
                               <Table aria-label="simple table">
                                   <TableHead>
                                       <TableRow>
@@ -255,8 +246,8 @@ import {message, Spin} from "antd";
                                       </TableRow>
                                   </TableHead>
                                   <TableBody>
-                                      {props.teams.filter(searchingFor(term)).map((teamData) => (
-                                          <TableRow key={teamData.team.id} onClick={() => currentRedirect(teamData.team.id)}>
+                                      {props.teams.filter(searchingFor(term)).map((teamData, index) => (
+                                          <TableRow key={teamData+index} onClick={() => currentRedirect(teamData.team.id)}>
                                               <TableCell component="th" scope="row">
                                                   <p>{teamData.team.name}</p>
                                               </TableCell>
@@ -286,7 +277,7 @@ import {message, Spin} from "antd";
                                   </TableBody>
                               </Table>
                           </TableContainer> :
-                          <TableContainer component={Paper} key={1}>
+                          <TableContainer component={Paper} key={101}>
                               <Table aria-label="simple table">
                                   <TableHead>
                                       <TableRow>
@@ -298,8 +289,8 @@ import {message, Spin} from "antd";
                                       </TableRow>
                                   </TableHead>
                                   <TableBody>
-                                      {props.myTeams.filter(searchingFor(term)).map((teamData) => (
-                                          <TableRow key={teamData.team.id} onClick={() => currentRedirect(teamData.team.id)}>
+                                      {props.myTeams.filter(searchingFor(term)).map((teamData, index) => (
+                                          <TableRow key={teamData+index} onClick={() => currentRedirect(teamData.team.id)}>
                                               <TableCell component="th" scope="row">
                                                   <p>{teamData.team.name}</p>
                                               </TableCell>

@@ -24,6 +24,8 @@ export function authUser(username, password) {
 
             localStorage.setItem('permissions', JSON.parse(base64).permissions);
 
+            localStorage.setItem('userId', JSON.parse(base64).person_id);
+
             dispatch(authUserSuccess(res.data.token, res.data.username, JSON.parse(base64)))
         } catch (e) {
             console.log(e);
