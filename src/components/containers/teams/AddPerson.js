@@ -18,6 +18,7 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import {message, Spin} from 'antd';
+import {API_URL, Headers_API} from "../../HOC/Api";
 
 const AddPerson = props => {
 
@@ -31,6 +32,7 @@ const AddPerson = props => {
         setTimeout(() => {
             setLoading(false)
         }, 500);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const showModal = (firstName, secondName, id) => {
@@ -56,14 +58,13 @@ const AddPerson = props => {
 
     const addPerson = async id => {
       try {
-          await axios.post(`http://5.61.56.234/team/${props.location.state.id}/person`,
+          await axios.post(`${API_URL}/team/${props.location.state.id}/person`,
               {
                   load,
                   personSkillId: id
               },
-              {
-                  headers: { Authorization: "Bearer " + localStorage.token }
-              });
+              Headers_API
+          );
 
           props.history.push({
               pathname: `/teams/${props.location.state.id}`,
@@ -94,7 +95,7 @@ const AddPerson = props => {
           <div className="Add__container">
 
               <Breadcrumbs aria-label="breadcrumb">
-                  <Link color="inherit" component={NavLink} to={`/teams`}>
+                  <Link color="inherit" component={NavLink} to={`/`}>
                       Команды
                   </Link>
                   <Link color="inherit" onClick={goBackHandler} style={{cursor: 'pointer'}}>

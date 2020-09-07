@@ -16,8 +16,7 @@ const Layout = props => {
             <div className={'Layout__nav'}>
                 <AppBar position="static">
                     <Toolbar edge="start">
-                        <Button color="inherit" component={NavLink} to={'/teams'}>Команды</Button>
-                        <Button color="inherit" component={NavLink} to={'/'} exact>Профиль</Button>
+                        <Button color="inherit" component={NavLink} to={'/'}>Команды</Button>
                     </Toolbar>
                     {localStorage.token ?
                         <div className="Layout__nav_buttons">

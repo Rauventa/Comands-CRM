@@ -23,6 +23,7 @@ import {getCurrentTeam, renderPersons, teamHistory} from "../../../store/actions
 import MenuItem from "@material-ui/core/MenuItem";
 import axios from 'axios';
 import {message, Spin} from "antd";
+import {API_URL, Headers_API} from "../../HOC/Api";
 
 const Team = props => {
 
@@ -45,6 +46,7 @@ const Team = props => {
         setTimeout(() => {
             setLoading(false)
         }, 500);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const openDeleteTeam = () => {
@@ -97,9 +99,7 @@ const Team = props => {
 
     const deletePerson = async id => {
       try {
-          await axios.delete(`http://5.61.56.234/team/${props.location.state.id}/person/${id}`, {
-              headers: { Authorization: "Bearer " + localStorage.token }
-          });
+          await axios.delete(`${API_URL}/team/${props.location.state.id}/person/${id}`, Headers_API);
 
           message.success('Пользователь успешно удален');
 
@@ -133,15 +133,25 @@ const Team = props => {
     };
 
     const changeTeam = async () => {
+
+        if (name === '') {
+            setName(props.teamInfo.name)
+        }
+        if (status === '') {
+            setStatus(props.teamInfo.status)
+        }
+        if (type === '') {
+            setType(props.teamInfo.type)
+        }
+
         try {
-            //todo - сделать првоерку на не введенные поля, перед загрузкой
-            await axios.put(`http://5.61.56.234/team/${props.location.state.id}`,
+            await axios.put(`${API_URL}/team/${props.location.state.id}`,
                 {
-                    name, type, status
+                    name: name || props.teamInfo.name,
+                    type: type || props.teamInfo.type,
+                    status: status || props.teamInfo.status
                 },
-                {
-                    headers: { Authorization: "Bearer " + localStorage.token }
-                }
+                Headers_API
             );
 
             setShowEditTeam(false);
@@ -158,11 +168,9 @@ const Team = props => {
 
     const deleteTeam = async () => {
         try {
-            await axios.delete(`http://5.61.56.234/team/${props.location.state.id}`, {
-                headers: { Authorization: "Bearer " + localStorage.token }
-            });
+            await axios.delete(`${API_URL}/team/${props.location.state.id}`, Headers_API);
 
-            props.history.push('/teams');
+            props.history.push('/');
 
             message.success('Команда успешно удалена');
         } catch (e) {
@@ -170,8 +178,6 @@ const Team = props => {
             message.error('Ошибка при удалении команды');
         }
     };
-
-    console.log(props.persons)
 
   return (
       <div className={'Team'}>
@@ -274,19 +280,19 @@ const Team = props => {
 
           <h1 className={'top-heading'}>
               {props.teamInfo.name}
-              {/*className={data.statusKey}*/}
               <Chip label={props.teamInfo.status} style={{marginLeft: '1rem'}} />
               {(localStorage.permissions) && (localStorage.userId = props.owner.id) ?
                   <EditIcon
                       onClick={openEditTeam}
                       className={'edit-icon'}
+                      style={{marginLeft: '1rem'}}
                   /> : null
               }
           </h1>
 
           <div className="Team__container">
               <Breadcrumbs aria-label="breadcrumb">
-                  <Link color="inherit" component={NavLink} to={'/teams'}>
+                  <Link color="inherit" component={NavLink} to={'/'}>
                       Команды
                   </Link>
                   <Typography color="textPrimary">{props.teamInfo.name}</Typography>

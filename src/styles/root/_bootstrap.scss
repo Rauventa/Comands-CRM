@@ -40,6 +40,8 @@ p {
   width: 100%;
   background-color: $white;
   padding: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .loading {

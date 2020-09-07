@@ -41,7 +41,7 @@ const Login = props => {
                 </div>
             </div>
             {props.token !== null ?
-                <Redirect to={'/teams'} /> :
+                <Redirect to={'/'} /> :
                 null
             }
         </div>

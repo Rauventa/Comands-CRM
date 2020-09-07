@@ -1,6 +1,5 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom'
-import {Home} from "../containers/home/Home";
 import Teams from "../containers/teams/Teams";
 import Team from "../containers/teams/Team";
 import Login from "../containers/auth/Login";
@@ -32,9 +31,6 @@ export const Router = () => {
                               </Route>
 
                               <Route path={'/'} exact>
-                                  <Home />
-                              </Route>
-                              <Route path={'/teams'} exact>
                                   <Teams />
                               </Route>
                               <Route path={'/teams/:id'}>
@@ -68,9 +64,6 @@ export const Router = () => {
                               </Route>
 
                               <Route path={'/'} exact>
-                                  <Home />
-                              </Route>
-                              <Route path={'/teams'} exact>
                                   <Teams />
                               </Route>
                               <Route path={'/teams/:id'}>

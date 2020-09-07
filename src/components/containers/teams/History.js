@@ -13,9 +13,8 @@ const History = props => {
         setTimeout(() => {
             setLoading(false)
         }, 500);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    console.log(props.historyList)
 
   return (
       <div className={'History'}>

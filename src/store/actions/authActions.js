@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {AUTH_USER_LOGOUT, AUTH_USER_SUCCESS} from "./actionTypes";
 import {message} from "antd";
+import {API_URL} from "../../components/HOC/Api";
 
 export function authUser(username, password) {
     return async dispatch => {
 
         try {
-            const res = await axios.post('http://5.61.56.234/auth/signin', {
+            const res = await axios.post(`${API_URL}/auth/signin`, {
                 username: username,
                 password: password
             });

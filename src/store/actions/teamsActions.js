@@ -5,13 +5,12 @@ import {
     RENDER_PERSONS_SUCCESS,
     RENDER_TEAMS_SUCCESS, TEAM_HISTORY_SUCCESS
 } from "./actionTypes";
+import {API_URL, Headers_API} from "../../components/HOC/Api";
 
 export function renderTeams() {
     return async dispatch => {
          try {
-             const response = await axios.get('http://5.61.56.234/team', {
-                 headers: { Authorization: "Bearer " + localStorage.token }
-             });
+             const response = await axios.get(`${API_URL}/team`, Headers_API);
 
              const teams = Object.entries(response.data.content).map((team) => {
                  return {
@@ -30,9 +29,7 @@ export function renderTeams() {
 export function renderMyTeams() {
     return async dispatch => {
         try {
-            const response = await axios.get('http://5.61.56.234/team/my', {
-                headers: { Authorization: "Bearer " + localStorage.token }
-            });
+            const response = await axios.get(`${API_URL}/team/my`, Headers_API);
 
             const myTeams = Object.entries(response.data.content).map((team) => {
                 return {
@@ -50,9 +47,7 @@ export function renderMyTeams() {
 export function getCurrentTeam(id) {
     return async dispatch => {
         try {
-            const response = await axios.get(`http://5.61.56.234/team/${id}`, {
-                headers: { Authorization: "Bearer " + localStorage.token }
-            });
+            const response = await axios.get(`${API_URL}/team/${id}`, Headers_API);
 
             dispatch(getTeamSuccess(response.data, response.data.owner));
         } catch (e) {
@@ -64,9 +59,7 @@ export function getCurrentTeam(id) {
 export function renderPersons(id) {
     return async dispatch => {
         try {
-            const response = await axios.get(`http://5.61.56.234/team/${id}/person`, {
-                headers: { Authorization: "Bearer " + localStorage.token }
-            });
+            const response = await axios.get(`${API_URL}/team/${id}/person`, Headers_API);
 
             const persons = Object.entries(response.data).map((person) => {
                 return {
@@ -84,9 +77,7 @@ export function renderPersons(id) {
 export function renderAllPersons() {
     return async dispatch => {
         try {
-            const response = await axios.get(`http://5.61.56.234/person/skill`, {
-                headers: { Authorization: "Bearer " + localStorage.token }
-            });
+            const response = await axios.get(`${API_URL}/person/skill`, Headers_API);
 
             dispatch(renderAllPersonsSuccess(response.data))
         } catch (e) {
@@ -98,9 +89,7 @@ export function renderAllPersons() {
 export function teamHistory(id) {
     return async dispatch => {
         try {
-            const response = await axios.get(`http://5.61.56.234/team/${id}/history`, {
-                headers: { Authorization: "Bearer " + localStorage.token }
-            });
+            const response = await axios.get(`${API_URL}team/${id}/history`, Headers_API);
 
             const historyList = Object.entries(response.data).map((item) => {
                 return {

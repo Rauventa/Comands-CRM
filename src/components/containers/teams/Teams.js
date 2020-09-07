@@ -17,6 +17,7 @@ import axios from 'axios';
 import Modal from "@material-ui/core/Modal";
 import MenuItem from "@material-ui/core/MenuItem";
 import {message, Spin} from "antd";
+import {API_URL, Headers_API} from "../../HOC/Api";
 
  const Teams = props => {
 
@@ -34,6 +35,7 @@ import {message, Spin} from "antd";
          setTimeout(() => {
              setLoading(false)
          }, 500);
+         // eslint-disable-next-line react-hooks/exhaustive-deps
      }, []);
 
 
@@ -52,8 +54,6 @@ import {message, Spin} from "antd";
          }
      };
 
-     // console.log(props.myTeams)
-
      const openCreateTeam = () => {
         setShowCreateTeam(true)
     };
@@ -64,13 +64,11 @@ import {message, Spin} from "antd";
 
     const createTeam = async () => {
       try {
-          await axios.post(`http://5.61.56.234/team`,
+          await axios.post(`${API_URL}/team`,
               {
                 name, type
               },
-              {
-                  headers: { Authorization: "Bearer " + localStorage.token }
-              }
+              Headers_API
           );
 
           setShowCreateTeam(false);
