@@ -89,8 +89,6 @@ const Team = props => {
         setShowDeletePerson(true);
     };
 
-    console.log(props.historyList)
-
     const searchingFor = term => {
         return function(x) {
             return ((x.person.personSkill.personInfo.firstName.toLowerCase().includes(term.toLowerCase()) || (x.person.personSkill.personInfo.secondName.toLowerCase().includes(term.toLowerCase())) || !term))

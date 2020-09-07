@@ -89,7 +89,7 @@ export function renderAllPersons() {
 export function teamHistory(id) {
     return async dispatch => {
         try {
-            const response = await axios.get(`${API_URL}team/${id}/history`, Headers_API);
+            const response = await axios.get(`${API_URL}/team/${id}/history`, Headers_API);
 
             const historyList = Object.entries(response.data).map((item) => {
                 return {
