@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {AUTH_USER_LOGOUT, AUTH_USER_SUCCESS} from "./actionTypes";
+import {message} from "antd";
 
 export function authUser(username, password) {
     return async dispatch => {
@@ -9,6 +10,8 @@ export function authUser(username, password) {
                 username: username,
                 password: password
             });
+
+            message.success( 'Вы успешно авторизовались');
 
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username', res.data.username);
@@ -23,7 +26,8 @@ export function authUser(username, password) {
 
             dispatch(authUserSuccess(res.data.token, res.data.username, JSON.parse(base64)))
         } catch (e) {
-            console.log(e)
+            console.log(e);
+            message.error( 'Ошибка при авторизации')
         }
     }
 }

@@ -2,7 +2,7 @@ import {
     GET_TEAM_SUCCESS,
     RENDER_ALL_PERSONS_SUCCESS, RENDER_MY_TEAMS_SUCCESS,
     RENDER_PERSONS_SUCCESS,
-    RENDER_TEAMS_SUCCESS
+    RENDER_TEAMS_SUCCESS, TEAM_HISTORY_SUCCESS
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -11,7 +11,8 @@ const initialState = {
     teamInfo: {},
     owner: '',
     persons: [],
-    personsList: []
+    personsList: [],
+    historyList: []
 };
 
 export default function teamsReducer(state = initialState, action) {
@@ -41,6 +42,11 @@ export default function teamsReducer(state = initialState, action) {
             return {
                 ...state,
                 personsList: action.personsList
+            };
+        case TEAM_HISTORY_SUCCESS:
+            return {
+                ...state,
+                historyList: action.historyList
             };
         default:
             return state

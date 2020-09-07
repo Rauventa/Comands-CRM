@@ -208,6 +208,38 @@
         }
       }
 
+      .History {
+
+        .history-card {
+          padding: 2rem 0;
+
+          border-bottom: 1px solid $bgDark;
+
+          h3 {
+            margin-bottom: 1rem;
+          }
+
+          &__content {
+            flex-basis: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &-item {
+              background-color: $white;
+              padding: 1rem;
+              border-radius: 5px;
+              flex-grow: 1;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
+              &:not(:last-child) {
+                margin-right: 1rem;
+              }
+            }
+          }
+        }
+      }
+
       //Auth pages ---
 
       .Login {

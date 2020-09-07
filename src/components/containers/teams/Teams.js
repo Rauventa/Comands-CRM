@@ -54,6 +54,7 @@ import {message, Spin} from "antd";
          }
      };
 
+     // console.log(props.myTeams)
 
      const openCreateTeam = () => {
         setShowCreateTeam(true)
@@ -179,72 +180,24 @@ import {message, Spin} from "antd";
               <div className="Team__container_search">
                   <TextField label="Поиск по командам" variant="outlined" onChange={event => setTerm(event.target.value)} />
 
-                  {/*{localStorage.permissions ?*/}
-                  {/*    <Button className={'primary-status'} variant="contained">*/}
-                  {/*        <FilterListIcon />*/}
-                  {/*        Ваши команды*/}
-                  {/*    </Button>*/}
-                  {/*    :*/}
-                  {/*    null*/}
-                  {/*}*/}
-
-                  {filter ?
-                      <Button className={'primary-status'} variant="contained" onClick={() => setFilter(!filter)}>
-                          <FilterListIcon />
-                          Ваши команды
-                      </Button>
-                      :
-                      <Button className={'primary-status'} variant="contained" onClick={() => setFilter(!filter)}>
-                          <FilterListIcon />
-                          Все команды
-                      </Button>
+                  {!localStorage.permissions ?
+                    null :
+                      [
+                          filter ?
+                              <Button className={'primary-status'} variant="contained" onClick={() => setFilter(!filter)} key={0}>
+                                  <FilterListIcon />
+                                  Ваши команды
+                              </Button>
+                              :
+                              <Button className={'primary-status'} variant="contained" onClick={() => setFilter(!filter)} key={1}>
+                                  <FilterListIcon />
+                                  Все команды
+                              </Button>
+                      ]
                   }
               </div>
 
-              {filter ?
-                  <TableContainer component={Paper}>
-                      <Table aria-label="simple table">
-                          <TableHead>
-                              <TableRow>
-                                  <TableCell>Команда</TableCell>
-                                  <TableCell align="left">Владелец</TableCell>
-                                  <TableCell align="left">Тип команды</TableCell>
-                                  <TableCell align="left">Статус</TableCell>
-                                  <TableCell align="left">Кол-во участников</TableCell>
-                              </TableRow>
-                          </TableHead>
-                          <TableBody>
-                              {props.teams.filter(searchingFor(term)).map((teamData) => (
-                                  <TableRow key={teamData.team.id} onClick={() => currentRedirect(teamData.team.id)}>
-                                      <TableCell component="th" scope="row">
-                                          <p>{teamData.team.name}</p>
-                                      </TableCell>
-                                      <TableCell align="left">
-                                          <div className={'table-row-content'}>
-                                              <p>{teamData.team.owner.firstName + ' ' + teamData.team.owner.secondName}</p>
-                                          </div>
-                                      </TableCell>
-                                      <TableCell align="left">
-                                          <div className={'table-row-content'}>
-                                              <p>{teamData.team.type}</p>
-                                          </div>
-                                      </TableCell>
-                                      <TableCell align="left">
-                                          <Chip
-                                              label={teamData.team.status}
-                                              // className={row.statusKey}
-                                          />
-                                      </TableCell>
-                                      <TableCell align="left">
-                                          <div className="table-row-content">
-                                              <p>{teamData.team.count}</p>
-                                          </div>
-                                      </TableCell>
-                                  </TableRow>
-                              ))}
-                          </TableBody>
-                      </Table>
-                  </TableContainer> :
+              {!localStorage.permissions ?
                   <TableContainer component={Paper}>
                       <Table aria-label="simple table">
                           <TableHead>
@@ -287,7 +240,96 @@ import {message, Spin} from "antd";
                               ))}
                           </TableBody>
                       </Table>
-                  </TableContainer>
+                  </TableContainer> :
+                  [
+                      filter ?
+                          <TableContainer component={Paper} key={0}>
+                              <Table aria-label="simple table">
+                                  <TableHead>
+                                      <TableRow>
+                                          <TableCell>Команда</TableCell>
+                                          <TableCell align="left">Владелец</TableCell>
+                                          <TableCell align="left">Тип команды</TableCell>
+                                          <TableCell align="left">Статус</TableCell>
+                                          <TableCell align="left">Кол-во участников</TableCell>
+                                      </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                      {props.teams.filter(searchingFor(term)).map((teamData) => (
+                                          <TableRow key={teamData.team.id} onClick={() => currentRedirect(teamData.team.id)}>
+                                              <TableCell component="th" scope="row">
+                                                  <p>{teamData.team.name}</p>
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <div className={'table-row-content'}>
+                                                      <p>{teamData.team.owner.firstName + ' ' + teamData.team.owner.secondName}</p>
+                                                  </div>
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <div className={'table-row-content'}>
+                                                      <p>{teamData.team.type}</p>
+                                                  </div>
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <Chip
+                                                      label={teamData.team.status}
+                                                      // className={row.statusKey}
+                                                  />
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <div className="table-row-content">
+                                                      <p>{teamData.team.count}</p>
+                                                  </div>
+                                              </TableCell>
+                                          </TableRow>
+                                      ))}
+                                  </TableBody>
+                              </Table>
+                          </TableContainer> :
+                          <TableContainer component={Paper} key={1}>
+                              <Table aria-label="simple table">
+                                  <TableHead>
+                                      <TableRow>
+                                          <TableCell>Команда</TableCell>
+                                          <TableCell align="left">Владелец</TableCell>
+                                          <TableCell align="left">Тип команды</TableCell>
+                                          <TableCell align="left">Статус</TableCell>
+                                          <TableCell align="left">Кол-во участников</TableCell>
+                                      </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                      {props.myTeams.filter(searchingFor(term)).map((teamData) => (
+                                          <TableRow key={teamData.team.id} onClick={() => currentRedirect(teamData.team.id)}>
+                                              <TableCell component="th" scope="row">
+                                                  <p>{teamData.team.name}</p>
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <div className={'table-row-content'}>
+                                                      <p>{teamData.team.owner.firstName + ' ' + teamData.team.owner.secondName}</p>
+                                                  </div>
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <div className={'table-row-content'}>
+                                                      <p>{teamData.team.type}</p>
+                                                  </div>
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <Chip
+                                                      label={teamData.team.status}
+                                                      // className={row.statusKey}
+                                                  />
+                                              </TableCell>
+                                              <TableCell align="left">
+                                                  <div className="table-row-content">
+                                                      <p>{teamData.team.count}</p>
+                                                  </div>
+                                              </TableCell>
+                                          </TableRow>
+                                      ))}
+                                  </TableBody>
+                              </Table>
+                          </TableContainer>
+                  ]
               }
           </div>
       </div>

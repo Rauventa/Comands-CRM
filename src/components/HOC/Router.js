@@ -12,65 +12,79 @@ import {Page404} from "./Page404";
 export const Router = () => {
   return (
       <>
-          {localStorage.permissions ?
+          {!localStorage.token ?
               <Switch>
-
                   <Route path={'/404'}>
                       <Page404 />
                   </Route>
-
-                  <Route path={'/'} exact>
-                      <Home />
-                  </Route>
-                  <Route path={'/teams'} exact>
-                      <Teams />
-                  </Route>
-                  <Route path={'/teams/:id'}>
-                      <Team />
-                  </Route>
-                  <Route path={'/create'}>
-                      <Create />
-                  </Route>
-
-                  <Route path={'/history/:id'}>
-                      <History />
-                  </Route>
-
-                  <Route path={'/add/:id'}>
-                      <AddPerson />
-                  </Route>
-
-                  {/*  Auth Routes here ---  */}
-
                   <Route path={'/login'}>
                       <Login />
                   </Route>
-
                   <Redirect to="/404" />
               </Switch>
-              :
-              <Switch>
+              : [
+                  (
+                      localStorage.permissions ?
+                          <Switch key={0}>
 
-                  <Route path={'/404'}>
-                      <Page404 />
-                  </Route>
+                              <Route path={'/404'}>
+                                  <Page404 />
+                              </Route>
 
-                  <Route path={'/'} exact>
-                      <Home />
-                  </Route>
-                  <Route path={'/teams'} exact>
-                      <Teams />
-                  </Route>
-                  <Route path={'/teams/:id'}>
-                      <Team />
-                  </Route>
+                              <Route path={'/'} exact>
+                                  <Home />
+                              </Route>
+                              <Route path={'/teams'} exact>
+                                  <Teams />
+                              </Route>
+                              <Route path={'/teams/:id'}>
+                                  <Team />
+                              </Route>
+                              <Route path={'/create'}>
+                                  <Create />
+                              </Route>
 
-                  <Route path={'/login'}>
-                      <Login />
-                  </Route>
+                              <Route path={'/history/:id'}>
+                                  <History />
+                              </Route>
 
-                  <Redirect to="/404" />
-              </Switch>
+                              <Route path={'/add/:id'}>
+                                  <AddPerson />
+                              </Route>
+
+                              {/*  Auth Routes here ---  */}
+
+                              <Route path={'/login'}>
+                                  <Login />
+                              </Route>
+
+                              <Redirect to="/404" />
+                          </Switch>
+                          :
+                          <Switch key={1}>
+
+                              <Route path={'/404'}>
+                                  <Page404 />
+                              </Route>
+
+                              <Route path={'/'} exact>
+                                  <Home />
+                              </Route>
+                              <Route path={'/teams'} exact>
+                                  <Teams />
+                              </Route>
+                              <Route path={'/teams/:id'}>
+                                  <Team />
+                              </Route>
+
+                              <Route path={'/login'}>
+                                  <Login />
+                              </Route>
+
+                              <Redirect to="/404" />
+                          </Switch>
+                  )
+              ]
           }
       </>
   )

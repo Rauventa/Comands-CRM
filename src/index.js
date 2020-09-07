@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import {Provider} from 'react-redux'
 import {createStore, compose, applyMiddleware} from "redux";
 import thunk from 'redux-thunk'

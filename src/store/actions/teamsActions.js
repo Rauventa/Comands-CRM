@@ -3,7 +3,7 @@ import {
     GET_TEAM_SUCCESS,
     RENDER_ALL_PERSONS_SUCCESS, RENDER_MY_TEAMS_SUCCESS,
     RENDER_PERSONS_SUCCESS,
-    RENDER_TEAMS_SUCCESS
+    RENDER_TEAMS_SUCCESS, TEAM_HISTORY_SUCCESS
 } from "./actionTypes";
 
 export function renderTeams() {
@@ -13,7 +13,7 @@ export function renderTeams() {
                  headers: { Authorization: "Bearer " + localStorage.token }
              });
 
-             const teams = Object.entries(response.data.content).map((team, id) => {
+             const teams = Object.entries(response.data.content).map((team) => {
                  return {
                      team: team[1]
                  }
@@ -34,7 +34,7 @@ export function renderMyTeams() {
                 headers: { Authorization: "Bearer " + localStorage.token }
             });
 
-            const myTeams = Object.entries(response.data.content).map((team, id) => {
+            const myTeams = Object.entries(response.data.content).map((team) => {
                 return {
                     team: team[1]
                 }
@@ -68,8 +68,6 @@ export function renderPersons(id) {
                 headers: { Authorization: "Bearer " + localStorage.token }
             });
 
-            console.log(response.data)
-
             const persons = Object.entries(response.data).map((person) => {
                 return {
                     person: person[1]
@@ -102,9 +100,22 @@ export function teamHistory(id) {
         try {
             const response = await axios.get(`http://5.61.56.234/team/${id}/history`, {
                 headers: { Authorization: "Bearer " + localStorage.token }
-            })
+            });
 
-            console.log(response.data)
+            const historyList = Object.entries(response.data).map((item) => {
+                return {
+                    id: item[1].transactionId,
+                    historyInfo: item[1].records
+                }
+            });
+
+            dispatch(teamHistorySuccess(historyList));
+
+            // historyList.map((item) => {
+            //     return {
+            //         ...[item.historyInfo.filter(x => (x.operation === "update") && (x.entityName === "TEAM"))]
+            //     }
+            // });
         } catch (e) {
             console.log(e)
         }
@@ -144,5 +155,12 @@ export function renderAllPersonsSuccess(personsList) {
     return {
         type: RENDER_ALL_PERSONS_SUCCESS,
         personsList
+    }
+}
+
+export function teamHistorySuccess(historyList) {
+    return {
+        type: TEAM_HISTORY_SUCCESS,
+        historyList
     }
 }

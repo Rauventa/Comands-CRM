@@ -27,7 +27,25 @@ const History = props => {
 
           <h1 className={'top-heading'}>История действий команды - {props.location.state.name}</h1>
           <div className="History__container">
-              <p>kjdklsrfjklsd</p>
+
+              {props.historyList.map((historyItem, index) => {
+                  return (
+                      <div className={'history-card'} key={historyItem+index}>
+                          <h3>ID изменения - <b>{historyItem.id}</b></h3>
+
+                          <div className="history-card__content">
+                              {historyItem.historyInfo.map((historyContent, index) => {
+                                  return (
+                                      <div className={'history-card__content-item'} key={historyContent+index}>
+                                          <p>Компонент изменения - <b>{historyContent.entityName}</b></p>
+                                          <p>Поле <b>{historyContent.field}</b> Изменено с <b>{historyContent.oldValue}</b> на <b>{historyContent.newValue}</b></p>
+                                      </div>
+                                  )
+                              })}
+                          </div>
+                      </div>
+                  )
+              })}
           </div>
       </div>
   )
@@ -35,7 +53,7 @@ const History = props => {
 
 function mapStateToProps(state) {
     return {
-        historyTm: state.teamsReducer.historyTm
+        historyList: state.teamsReducer.historyList
     }
 }
 

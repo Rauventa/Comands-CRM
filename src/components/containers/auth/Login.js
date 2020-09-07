@@ -11,7 +11,7 @@ const Login = props => {
     const [password, setPassword] = useState('');
 
     const loginHandler = () => {
-        props.authUser(username, password);
+        props.authUser(username, password)
     };
 
     return (
